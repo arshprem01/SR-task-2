@@ -130,6 +130,10 @@ class Transcriber:
         path = Path(audio_path)
         if not path.exists():
             raise ValueError(f"Audio file does not exist or is empty: {path}")
+        if not validate_language(language):
+            raise ValueError(f"Unsupported language code: {language}")
+        if task not in {"transcribe", "translate"}:
+            raise ValueError("Task must be either 'transcribe' or 'translate'.")
 
         validate_audio_file(path)
 
@@ -141,7 +145,7 @@ class Transcriber:
                 transcription_kwargs["language"] = language
 
             raw_result = model.transcribe(str(path), **transcription_kwargs)
-        except Exception as exc:  # noqa: BLE001 - app converts to friendly message later
+        except Exception as exc:
             raise ValueError(f"Transcription failed: {exc}") from exc
 
         if isinstance(raw_result, tuple) and len(raw_result) == 2:

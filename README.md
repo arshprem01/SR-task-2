@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a small but complete Automatic Speech Recognition (ASR) application built with Python, Streamlit, and Whisper-based transcription. It allows users to upload an audio recording, choose a transcription model and language, and receive a clean transcript in the browser.
+This project is a local Automatic Speech Recognition (ASR) application built with Python, Streamlit, and Whisper-based transcription. It lets users upload an audio recording, choose a model and language, review a transcript, and export plain text or timed subtitles.
 
 ## Problem Statement
 
@@ -26,7 +26,10 @@ Many students and developers need a simple local speech-to-text tool for transcr
 - Copy-friendly transcript display.
 - Download as TXT and SRT files.
 - Error handling for invalid files and failed transcription runs.
-- Simple Streamlit interface.
+- Responsive, two-column Streamlit transcription workspace.
+- Audio preview, file details, and upload-size validation.
+- Results stay visible while downloading or interacting with the page.
+- Local processing with safe temporary-file cleanup when the workspace is cleared or a new recording is selected.
 
 ## Technologies and Tools Used
 
@@ -60,18 +63,15 @@ ASR-Tool/
 │   ├── __init__.py
 │   ├── test_transcriber.py
 │   └── test_audio_utils.py
-├── assets/
-│   └── .gitkeep
 ├── docs/
 │   └── usage.md
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
-├── .env.example
 ├── LICENSE
 ├── .streamlit/
 │   └── config.toml
-└── .venv/
+└── .venv/  (local only; excluded from Git)
 ```
 
 ## Prerequisites
@@ -140,10 +140,6 @@ streamlit run app.py
 ```
 
 Open the URL shown in the terminal, such as http://localhost:8501.
-
-## How It Works
-
-Audio Upload → File Validation → Audio Preprocessing → ASR Model Inference → Text Formatting → Display/Download
 
 ## Step-by-Step Usage
 
@@ -263,10 +259,6 @@ git branch -M main
 git remote add origin https://github.com/your-username/asr-tool.git
 git push -u origin main
 ```
-
-## How It Works
-
-Audio Upload → File Validation → Audio Preprocessing → ASR Model Inference → Text Formatting → Display/Download.
 
 ## Mermaid Architecture Diagram
 

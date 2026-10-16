@@ -79,3 +79,12 @@ def test_mocked_transcription_run(tmp_path, monkeypatch):
     assert output["text"] == "Hello there"
     assert output["language"] == "en"
     assert output["segments"][0]["text"] == "Hello there"
+
+
+def test_transcriber_rejects_invalid_language(tmp_path, monkeypatch):
+    audio_path = tmp_path / "sample.wav"
+    audio_path.write_bytes(b"dummy")
+    monkeypatch.setattr("asr.transcriber.validate_audio_file", lambda *args, **kwargs: Path(audio_path))
+
+    with pytest.raises(ValueError, match="Unsupported language code"):
+        Transcriber(model_size="tiny").transcribe(audio_path, language="invalid-lang")
